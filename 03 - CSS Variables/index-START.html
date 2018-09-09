@@ -5,7 +5,7 @@
   <title>Scoped CSS Variables and JS</title>
 </head>
 <body>
-  <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
+  <h2>Update CSS Variables with <span class='hl'>JS</span></h2> <!-- add class of hl to change JS color -->
 
   <div class="controls">
     <label for="spacing">Spacing:</label>
@@ -20,31 +20,57 @@
 
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
-  <style>
+  <style> /*add CSS variables*/
+    :root {
+      --base: yellow;
+      --spacing: 10px;
+      --blur: 10px;
+  }
+
+  img {
+    padding: var(--spacing);
+    background: var(--base);
+    filter: blur(var(--blur));
+  }
+
+  .hl {
+    color: var(--base);
+  }
 
     /*
       misc styles, nothing to do with CSS variables
     */
 
-    body {
-      text-align: center;
-      background: #193549;
-      color: white;
-      font-family: 'helvetica neue', sans-serif;
-      font-weight: 100;
-      font-size: 50px;
-    }
+  body {
+    text-align: center;
+    background: #193549;
+    color: white;
+    font-family: 'helvetica neue', sans-serif;
+    font-weight: 100;
+    font-size: 50px;
+  }
 
-    .controls {
-      margin-bottom: 50px;
-    }
+  .controls {
+    margin-bottom: 50px;
+  }
 
-    input {
-      width:100px;
-    }
+  input {
+    width:100px;
+  }
   </style>
 
-  <script>
+  <script> //add script to adjust on page
+
+  const inputs = document.querySelectorAll('.controls input'); //constant that holds inputs
+
+  function handleUpdate() {
+    const suffix = this.dataSet.sizing || ''; //using dataset built-in features
+    document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+     }
+
+  inputs.forEach(input => input.addEventListener('change', handleUpdate)); //listens for change
+  inputs.forEach(input => input.addEventListener('mousemove', handleUpdate)); //listens for mouse movement
+
   </script>
 
 </body>
